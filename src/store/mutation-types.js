@@ -1,0 +1,2 @@
+export const UPDATE_GIRLS = 'UPDATE_GIRLS'
+export const SET_DEFAULT_GIRLS = 'SET_DEFAULT_GIRLS'
