@@ -17,7 +17,10 @@
           <a>目前排名</a>
         </router-link>
         <router-link exact-active-class="active" tag="li" to="/day2">
-          <a>Day2 海報一覽</a>
+          <a>week1 海報一覽</a>
+        </router-link>
+        <router-link exact-active-class="active" tag="li" to="/day3">
+          <a>week2 海報一覽</a>
         </router-link>
       </ul>
     </collapse>
