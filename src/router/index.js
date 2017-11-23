@@ -4,6 +4,7 @@ import HelloWorld from '@/components/HelloWorld'
 import Girls from '@/components/Girls'
 import Day2 from '@/components/Day2/Day2'
 import Day3 from '@/components/Day3/Day3'
+import Day4 from '@/components/Day4/Day4'
 
 
 Vue.use(Router)
@@ -24,6 +25,11 @@ export default new Router({
       path: '/day3',
       name: 'Day3',
       component: Day3
+    },
+    {
+      path: '/day4',
+      name: 'Day4',
+      component: Day4
     },
   ]
 })

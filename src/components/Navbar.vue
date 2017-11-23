@@ -22,6 +22,9 @@
         <router-link exact-active-class="active" tag="li" to="/day3">
           <a>week2 海報一覽</a>
         </router-link>
+        <router-link exact-active-class="active" tag="li" to="/day4">
+          <a>week3 鬧鐘</a>
+        </router-link>
       </ul>
     </collapse>
   </div>

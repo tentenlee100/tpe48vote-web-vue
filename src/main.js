@@ -6,11 +6,13 @@ import router from './router'
 import VueResource from 'vue-resource'
 import VueScrollTo from 'vue-scrollto';
 import store from './store'
+import VueYoutube from 'vue-youtube'
 
 Vue.config.productionTip = false
 
 Vue.use(VueResource)
 Vue.use(VueScrollTo)
+Vue.use(VueYoutube)
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
