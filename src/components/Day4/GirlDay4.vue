@@ -39,7 +39,9 @@
           <div class="youtube">
             <div class="play"  v-on:click="play = false">
             </div>
-            <img class="img-responsive" :src="youtubeImageUrl" alt="">
+            <lazy-component @load="imgError">
+              <img class="youtube-img  center-blockr" @load="imgError" :src="youtubeImageUrl" alt="">
+            </lazy-component>
           </div>
         </template>
         <template v-else>
@@ -68,7 +70,8 @@ export default {
       loop:1,
       playlist: this.youtubeId
 
-    }
+    },
+    imgErrorTimes: 0
   }),
   watch:{
     girl: function(e){
@@ -93,7 +96,21 @@ export default {
     },
     youtubeImageUrl: function() {
       // return 'https://www.youtube.com/embed/' + this.girl.detail['2017/11/23'].key2
-      return  "https://i.ytimg.com/vi/" + this.girl.detail['2017/11/23'].key2 + "/maxresdefault.jpg"
+
+      if (this.imgErrorTimes == 0){
+        return  "https://img.youtube.com/vi/" + this.girl.detail['2017/11/23'].key2 + "/maxresdefault.jpg"
+      }else if (this.imgErrorTimes == 1){
+        return  "https://img.youtube.com/vi/" + this.girl.detail['2017/11/23'].key2 + "/sddefault.jpg"
+      }else if (this.imgErrorTimes == 2){
+        return  "https://img.youtube.com/vi/" + this.girl.detail['2017/11/23'].key2 + "/hqdefault.jpg"
+      }else if (this.imgErrorTimes == 3){
+        return  "https://img.youtube.com/vi/" + this.girl.detail['2017/11/23'].key2 + "/mqdefault.jpg"
+      }else if (this.imgErrorTimes == 4){
+        return  "https://img.youtube.com/vi/" + this.girl.detail['2017/11/23'].key2 + "/default.jpg"
+      }else{
+        return  "https://img.youtube.com/vi/" + this.girl.detail['2017/11/23'].key2 + "/default.jpg"
+      }
+
     },
     url: function() {
       return 'http://tpe48.tw/auditionPersonal.html?gid=' + this.girl.seq
@@ -106,6 +123,13 @@ export default {
       loop:1 ,
       playlist: this.youtubeId
     })
+  },
+  methods: {
+    imgError(e) {
+      if (e.target.naturalHeight == 90 && this.imgErrorTimes <= 5){
+        this.imgErrorTimes++
+      }
+    }
   }
 }
 </script>
@@ -156,7 +180,10 @@ export default {
     filter: alpha(opacity=80);
     transition: all 0.2s ease-out;
 }
-
+.youtube-img {
+  /*width: 100%;
+  height: 100%;*/
+}
 .youtube .play:hover {
     opacity: 1;
     filter: alpha(opacity=100);

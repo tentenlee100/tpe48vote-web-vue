@@ -7,12 +7,17 @@ import VueResource from 'vue-resource'
 import VueScrollTo from 'vue-scrollto';
 import store from './store'
 import VueYoutube from 'vue-youtube'
+import VueLazyload from 'vue-lazyload'
 
 Vue.config.productionTip = false
 
 Vue.use(VueResource)
 Vue.use(VueScrollTo)
 Vue.use(VueYoutube)
+Vue.use(VueLazyload,{
+  lazyComponent: true
+})
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
