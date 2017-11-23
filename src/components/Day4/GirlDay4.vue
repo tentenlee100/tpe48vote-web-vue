@@ -37,15 +37,13 @@
       <div class="embed-responsive embed-responsive-16by9">
         <template v-if="play">
           <div class="youtube">
-            <div class="play"  v-on:click="play = ture">
+            <div class="play"  v-on:click="play = false">
             </div>
             <img class="img-responsive" :src="youtubeImageUrl" alt="">
-
           </div>
-
         </template>
         <template v-else>
-          <youtube :video-id="girl.detail['2017/11/23'].key2" ref="youtube" :player-vars="{autoplay:1}"></youtube>
+          <youtube :video-id="girl.detail['2017/11/23'].key2" ref="youtube" :player-vars="playerVars"></youtube>
         </template>
       <!-- <iframe class="embed-responsive-item" :src="youtubeUrl" frameborder="0" allowfullscreen></iframe> -->
     </div>
@@ -64,9 +62,31 @@ export default {
   name: "girl-day4",
   props: ['girl'],
   data: () => ({
-    play: true
+    play: true,
+    playerVars: {
+      autoplay:1 ,
+      loop:1,
+      playlist: this.youtubeId
+
+    }
   }),
+  watch:{
+    girl: function(e){
+      console.log("girl watch",e);
+      this.$set(this,'playerVars',{
+        autoplay:1 ,
+        loop:1 ,
+        playlist: e.detail['2017/11/23'].key2
+      })
+      console.log("girl watch done",this.playerVars);
+
+      }
+
+  },
   computed: {
+    youtubeId: function(){
+      return this.girl.detail['2017/11/23'].key2
+    },
     youtubeUrl: function() {
       // return 'https://www.youtube.com/embed/' + this.girl.detail['2017/11/23'].key2
       return 'youtube.com://' + this.girl.detail['2017/11/23'].key2
@@ -78,6 +98,14 @@ export default {
     url: function() {
       return 'http://tpe48.tw/auditionPersonal.html?gid=' + this.girl.seq
     }
+  },
+  mounted() {
+    //do something after mounting vue instance
+    this.$set(this,'playerVars',{
+      autoplay:1 ,
+      loop:1 ,
+      playlist: this.youtubeId
+    })
   }
 }
 </script>
