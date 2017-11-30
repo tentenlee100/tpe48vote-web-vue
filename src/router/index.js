@@ -2,9 +2,8 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import HelloWorld from '@/components/HelloWorld'
 import Girls from '@/components/Girls'
-import Day2 from '@/components/Day2/Day2'
-import Day3 from '@/components/Day3/Day3'
-import Day4 from '@/components/Day4/Day4'
+import WorkType1 from '@/components/WorkType1/WorkType1'
+import WorkType2 from '@/components/WorkType2/WorkType2'
 
 
 Vue.use(Router)
@@ -17,19 +16,14 @@ export default new Router({
       component: Girls
     },
     {
-      path: '/day2',
-      name: 'Day2',
-      component: Day2
+      path: '/type1',
+      name: 'WorkType1',
+      component: WorkType1
     },
     {
-      path: '/day3',
-      name: 'Day3',
-      component: Day3
-    },
-    {
-      path: '/day4',
-      name: 'Day4',
-      component: Day4
+      path: '/type2',
+      name: 'WorkType2',
+      component: WorkType2
     },
   ]
 })

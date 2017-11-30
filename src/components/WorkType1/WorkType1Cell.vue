@@ -27,15 +27,15 @@
         </div>
       </div>
     </div>
-
   </div>
   <div class="col-xs-12">
-    <h3>{{girl.detail['2017/11/08'].key1}}</h3>
+    <h3>{{info}}</h3>
   </div>
 <div class="row">
     <div class="col-xs-12 col-sm-6">
       <a :href="image1" target="_blank">
       <img class="img-responsive" :src="image1" alt="">
+
       </a>
     </div>
     <div class="col-xs-12 col-sm-6">
@@ -53,17 +53,32 @@
 </template>
 <script>
 export default {
-  name: "girl-day2",
-  props: ['girl'],
+  name: "work-type1-cell",
+  props: ['girl','typeKey','path'],
   data: () => ({
 
   }),
   computed: {
+    info: function(){
+      if(this.girl.detail.hasOwnProperty(this.typeKey)){
+        return this.girl.detail[this.typeKey].key1
+      }else{
+        return ""
+      }
+    },
     image1: function() {
-      return 'http://tpe48.tw/img/event/2017audition/work1/' + this.girl.detail['2017/11/08'].key3.replace(".jpg", "h.jpg");
+      if(this.girl.detail.hasOwnProperty(this.typeKey)){
+        return 'http://tpe48.tw/img/event/2017audition/'+ this.path + '/' + this.girl.detail[this.typeKey].key3.replace(".jpg", "h.jpg");
+      }else{
+        return ""
+      }
     },
     image2: function() {
-      return 'http://tpe48.tw/img/event/2017audition/work1/' + this.girl.detail['2017/11/08'].key4.replace(".jpg", "h.jpg");
+      if(this.girl.detail.hasOwnProperty(this.typeKey)){
+        return 'http://tpe48.tw/img/event/2017audition/'+ this.path + '/' + this.girl.detail[this.typeKey].key4.replace(".jpg", "h.jpg");
+      }else{
+        return ""
+      }
     },
     url: function() {
       return 'http://tpe48.tw/auditionPersonal.html?gid=' + this.girl.seq

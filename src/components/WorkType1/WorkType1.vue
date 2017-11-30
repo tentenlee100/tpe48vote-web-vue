@@ -3,7 +3,7 @@
     <div class="container">
       <div class="row">
         <template v-for="(girl , index) in girls">
-          <girl-day2 :girl="girl" :index="index"></girl-day2>
+          <work-type1-cell :girl="girl" :typeKey="$route.query.typeKey" :path="$route.query.imagePath" :index="index"></work-type1-cell>
         </template>
       </div>
     </div>
@@ -24,30 +24,52 @@
   </div>
 </template>
 <script>
-import GirlDay2 from './GirlDay2'
+import WorkType1Cell from './WorkType1Cell'
 import { mapGetters, mapActions } from 'vuex'
 
 
 export default {
   name: "day2",
   data: () => ({
-    enterId:""
+    enterId:"",
+    typeKey:"2017/11/08"
   }),
+  watch: {
+  // 如果路由有变化，会再次执行该方法
+  '$route': 'fetchData'
+},
   methods: {
+    fetchData () {
+      this.typeKey = this.$route.query.typeKey
+      this.checkTypeKey()
+
+   },
     getJS() {
       const body = {}
       this.$http.get("https://tenten.tw/tpe48vote/api/getGirl", {
         emulateJSON: true
       }).then(response => {
         this.setDefaultGirls(response.body)
+        this.checkTypeKey()
+
       }, response => {
         // this.scheduleLoading = false
       })
     },
     scrollTo(e){
       document.activeElement.blur()
-      setTimeout(()=>{this.$scrollTo("#day2-"+this.enterId)},100);
+      setTimeout(()=>{this.$scrollTo("#day2-"+this.enterId,100,{offset:-60})});
 
+    },
+    checkTypeKey(){
+      if (this.girls.length == 0){
+        return;
+      }
+      if(!this.girls[0].detail.hasOwnProperty(this.$route.query.typeKey) || !this.girls[0].detail[this.$route.query.typeKey].hasOwnProperty("key2") ) {
+        this.$router.push("/");
+
+        return
+      }
     },
     ...mapActions([
       'updateGirls',
@@ -68,10 +90,22 @@ export default {
       this.getJS()
     }else{
       this.resetDefaultGirls()
+      this.checkTypeKey()
+
     }
+    this.fetchData()
   },
+  // beforeRouteEnter (to, from, next) {
+  //
+  //   console.log( to.query);
+  //   this.typeKey = to.query.typeKey
+  //   next();
+  //   // getPost(to.params.id, (err, post) => {
+  //   //   next(vm => vm.setData(err, post))
+  //   // })
+  // },
   components: {
-    GirlDay2
+    WorkType1Cell
   }
 }
 </script>

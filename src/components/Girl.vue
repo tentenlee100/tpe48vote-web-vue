@@ -1,5 +1,5 @@
 <template>
-  <div class="col-xs-12 col-md-6 col-lg-6">
+  <div class="col-xs-12 col-md-6 col-lg-6" :id="'day2-'+ girl.seq">
     <div class="media">
       <div class="media-left media-middle">
         <h1>{{index + 1}}</h1>
@@ -23,6 +23,7 @@
       </div>
     </div>
   </div>
+
 </template>
 <script>
 export default {
