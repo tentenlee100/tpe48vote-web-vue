@@ -19,6 +19,9 @@
           <dropdown tag="li">
             <a class="dropdown-toggle" role="button">每周課程<span class="caret"></span></a>
             <template slot="dropdown">
+              <router-link exact-active-class="active" tag="li" :to="{ name: 'WorkType2', query: { typeKey: '2017/12/07' }}" v-on:click.native="click()">
+                <a role="button">week5 給五年後的自己</a>
+              </router-link>
               <router-link exact-active-class="active" tag="li" :to="{ name: 'WorkType2', query: { typeKey: '2017/11/30'}}" v-on:click.native="click()">
                 <a role="button">week4 親手作料理、讓你珍惜的人填飽肚子吧！</a>
               </router-link>
