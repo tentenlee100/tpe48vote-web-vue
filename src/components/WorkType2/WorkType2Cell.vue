@@ -1,36 +1,9 @@
 <template>
-  <div class="item col-xs-12" :id="'day2-'+ girl.seq">
-    <div class="col-xs-3 col-sm-2 col-md-1">
-      <div class="row">
-        <img class="headshot" :src="girl.imageUrl" alt="...">
-      </div>
-    </div>
-    <div class="col-xs-9 col-sm-10  col-md-11">
-      <div class="row">
-        <div class="col-xs-8">
-          <div class="row">
-            <div class="col-xs-12 col-md-4">
-              <div class="row">
-                <h3 class="title">編號:{{ girl.seq + " " + girl.name}} </h3>
-              </div>
-            </div>
-            <div class="col-xs-12 col-md-6">
-              <div class="row">
-                <h3 class="title"> <small>{{girl.birth}} ({{girl.location}})</small>  </h3>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-xs-4">
-          <div class="row">
-            <a :href="url" target="_blank" class="pull-right btn btn-warning" type="button" name="button">我要投票</a>
-          </div>
-        </div>
-      </div>
-
-    </div>
+  <div class="item col-xs-12" >
+    <work-cell-header v-if="girl" :girl="girl" @select="select"></work-cell-header>
     <div class="col-xs-12">
-      <h3>{{info}}</h3>
+      <div class="alert alert-warning" v-if="workInfo"><h4>{{workInfo.day + "  " + workInfo.name}}</h4></div>
+      <h3>{{title}}</h3>
     </div>
     <div v-if="youtubeId.length > 0" class="row">
       <div class="col-xs-12">
@@ -60,9 +33,10 @@
 </div>
 </template>
 <script>
+import WorkCellHeader from "../WorkCellHeader"
 export default {
   name: "work-type2-cell",
-  props: ['girl','typeKey'],
+  props: ['girl','typeKey','workInfo'],
   data: () => ({
     play: true,
     playerVars: {
@@ -83,28 +57,37 @@ export default {
   //   }
   //
   // },
+  methods: {
+    select() {
+      this.$emit('select',this.girl)
+    },
+    imgError(e) {
+      if (e.target.naturalHeight == 90 && this.imgErrorTimes <= 5){
+        this.imgErrorTimes++
+      }
+    }
+  },
   computed: {
-    info: function(){
-      if(this.girl.detail.hasOwnProperty(this.typeKey)){
-        return this.girl.detail[this.typeKey].key1
-      }else{
-        return ""
+    title: function() {
+      if (this.workInfo) {
+        return this.workInfo.key1
+      } else {
+        return this.girl.key1
       }
     },
     youtubeId: function(){
-      if(this.girl.detail.hasOwnProperty(this.typeKey) && this.girl.detail[this.typeKey].hasOwnProperty('key2')){
-        return this.girl.detail[this.typeKey].key2
-      }else{
-        return ""
+      if (this.workInfo) {
+        return this.workInfo.key2
+      } else {
+        return this.girl.key2
       }
+
     },
     youtubeUrl: function() {
       // return 'https://www.youtube.com/embed/' + this.girl.detail[this.typeKey].key2
-      if (this.youtubeId.length > 0) {
-        return 'youtube.com://' + this.youtubeId
-      }else{
-        return ""
-      }
+
+      return 'youtube.com://' + this.youtubeId
+
     },
     youtubeImageUrl: function() {
       // return 'https://www.youtube.com/embed/' + this.girl.detail[this.typeKey].key2
@@ -128,9 +111,6 @@ export default {
       }
 
     },
-    url: function() {
-      return 'http://tpe48.tw/auditionPersonal.html?gid=' + this.girl.seq
-    }
   },
   mounted() {
     //do something after mounting vue instance
@@ -140,12 +120,8 @@ export default {
       playlist: this.youtubeId
     })
   },
-  methods: {
-    imgError(e) {
-      if (e.target.naturalHeight == 90 && this.imgErrorTimes <= 5){
-        this.imgErrorTimes++
-      }
-    }
+  components: {
+    WorkCellHeader
   }
 }
 </script>

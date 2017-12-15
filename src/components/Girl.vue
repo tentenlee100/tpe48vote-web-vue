@@ -5,19 +5,28 @@
         <h1>{{index + 1}}</h1>
       </div>
       <div class="media-body">
-        <h2 class="media-heading text-center">
-          編號:{{ girl.seq + " " + girl.name}}
-        </h2>
-        <div class="media">
+        <div class="media-heading">
+          <div class="row">
+            <div class="col-xs-8">
+              <h2 class="media-heading text-center">
+                編號:{{ girl.seq + " " + girl.name}}
+              </h2>
+            </div>
+            <div class="col-xs-4">
+              <a :href="url" target="_blank" class="pull-right btn btn-warning" type="button" name="button">我要投票</a>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="media member-data"  @click="select">
           <div class="media-left media-middle">
-            <a :href="'http://tpe48.tw/auditionPersonal.html?gid='+ girl.seq" target="_blank">
               <img class="media-object" :src="girl.imageUrl" alt="...">
-            </a>
           </div>
           <div class="media-body">
             <h4><strong>累積票數: </strong>{{girl.voteCount}}</h4>
             <h4><strong>本日票數: </strong>{{girl.voteToday}}</h4>
-            <h4><strong>自我介紹: </strong>{{girl.detail["2017/11/06"].key1}}</h4>
+            <h4><strong>自我介紹: </strong>{{girl.introduce}}</h4>
           </div>
         </div>
       </div>
@@ -31,7 +40,17 @@ export default {
   props: ['girl', 'index'],
   data: () => ({
 
-  })
+  }),
+  methods: {
+    select() {
+      this.$emit('select',this.girl)
+    }
+  },
+  computed: {
+    url: function() {
+      return 'http://tpe48.tw/auditionPersonal.html?gid=' + this.girl.seq
+    }
+  }
 }
 </script>
 <style scoped>
@@ -42,5 +61,8 @@ export default {
   .media{
     margin-top: 10px;
     margin-bottom: 10px;
+  }
+  .member-data{
+    cursor:pointer;
   }
 </style>

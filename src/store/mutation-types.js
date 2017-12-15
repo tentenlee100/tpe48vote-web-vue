@@ -1,2 +1,4 @@
 export const UPDATE_GIRLS = 'UPDATE_GIRLS'
 export const SET_DEFAULT_GIRLS = 'SET_DEFAULT_GIRLS'
+export const SET_WORK_INDEX = 'SET_WORK_INDEX'
+export const SET_ORDER_TYPE = 'SET_ORDER_TYPE'
