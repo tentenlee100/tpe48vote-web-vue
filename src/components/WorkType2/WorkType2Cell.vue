@@ -2,30 +2,33 @@
   <div class="item col-xs-12" >
     <work-cell-header v-if="girl" :girl="girl" @select="select"></work-cell-header>
     <div class="col-xs-12">
-      <div class="alert alert-warning" v-if="workInfo"><h4>{{workInfo.day + "  " + workInfo.name}}</h4></div>
+      <div class="row title-alert-info">
+        <div class="alert alert-info" v-if="workInfo"><h3>{{workInfo.day + "  " + workInfo.name}}</h3></div>
+      </div>
       <h3>{{title}}</h3>
     </div>
     <div v-if="youtubeId.length > 0" class="row">
       <div class="col-xs-12">
-        <div class="embed-responsive embed-responsive-16by9">
-          <template v-if="play">
-            <div class="youtube">
-              <div class="play"  v-on:click="play = false">
+        <div class="row">
+          <div class="embed-responsive embed-responsive-16by9">
+            <template v-if="play">
+              <div class="youtube">
+                <div class="play"  v-on:click="play = false">
+                </div>
+                <lazy-component @load="imgError">
+                  <img class="youtube-img img-responsive block-center" @load="imgError" :src="youtubeImageUrl" alt="">
+                </lazy-component>
               </div>
-              <lazy-component @load="imgError">
-                <img class="youtube-img img-responsive block-center" @load="imgError" :src="youtubeImageUrl" alt="">
-              </lazy-component>
-            </div>
-          </template>
-          <template v-else>
-            <youtube :video-id="youtubeId" ref="youtube" :player-vars="playerVars"></youtube>
-          </template>
-          <!-- <iframe class="embed-responsive-item" :src="youtubeUrl" frameborder="0" allowfullscreen></iframe> -->
+            </template>
+            <template v-else>
+              <youtube :video-id="youtubeId" ref="youtube" :player-vars="playerVars"></youtube>
+            </template>
+            <!-- <iframe class="embed-responsive-item" :src="youtubeUrl" frameborder="0" allowfullscreen></iframe> -->
+          </div>
         </div>
-
       </div>
     </div>
-    <div class="col-xs-12">
+    <div v-if="girl" class="col-xs-12">
       <hr class="featurette-divider" />
     </div>
   </div>
@@ -41,9 +44,8 @@ export default {
     play: true,
     playerVars: {
       autoplay:1 ,
-      loop:1,
-      playlist: this.youtubeId
-
+      // loop:1,
+      // playlist: this.youtubeId
     },
     imgErrorTimes: 0
   }),
@@ -112,14 +114,6 @@ export default {
 
     },
   },
-  mounted() {
-    //do something after mounting vue instance
-    this.$set(this,'playerVars',{
-      autoplay:1 ,
-      loop:1 ,
-      playlist: this.youtubeId
-    })
-  },
   components: {
     WorkCellHeader
   }
@@ -180,5 +174,20 @@ export default {
 .youtube .play:hover {
   opacity: 1;
   filter: alpha(opacity=100);
+}
+.title-alert-info {
+  margin-bottom: 0px;
+}
+.title-alert-info .alert-info {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  margin-left: -15px;
+  margin-right: -15px;
+  border-radius: 0px;
+  margin-bottom: 0px;
+}
+.title-alert-info .alert-info h3 {
+  margin-top: 0px;
+  margin-bottom: 0px;
 }
 </style>

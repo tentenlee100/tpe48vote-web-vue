@@ -36,9 +36,8 @@ export default {
     enterId:"",
     girls:[],
     playerVars: {
-      loop:1,
-      playlist: this.youtubeId
-
+      // loop:1,
+      // playlist: this.youtubeId
     },
     selectGirl:null,
     typeKey:"2017/11/08",

@@ -2,7 +2,9 @@
 <div class="item col-xs-12" >
   <work-cell-header v-if="girl" :girl="girl" @select="select" ></work-cell-header>
   <div class="col-xs-12">
-    <div class="alert alert-warning" v-if="workInfo"><h4>{{workInfo.day + "  " + workInfo.name}}</h4></div>
+    <div class="row title-alert-info">
+      <div class="alert alert-info" v-if="workInfo"><h3>{{workInfo.day + "  " + workInfo.name}}</h3></div>
+    </div>
     <h3>{{title}}</h3>
   </div>
   <div class="row">
@@ -17,7 +19,7 @@
     </a>
     </div>
   </div>
-  <div class="col-xs-12">
+  <div v-if="girl" class="col-xs-12">
     <hr class="featurette-divider" />
   </div>
 </div>
@@ -91,5 +93,20 @@ export default {
   margin-right: 0px;
   margin-bottom: 10px;
   margin-left: 0px;
+}
+.title-alert-info {
+  margin-bottom: 0px;
+}
+.title-alert-info .alert-info {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  margin-left: -15px;
+  margin-right: -15px;
+  border-radius: 0px;
+  margin-bottom: 0px;
+}
+.title-alert-info .alert-info h3 {
+  margin-top: 0px;
+  margin-bottom: 0px;
 }
 </style>

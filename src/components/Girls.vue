@@ -23,6 +23,9 @@
     </div>
 
     <div class="row">
+      <div v-if="loading" class="text-center">
+        <spinner class="spinner inline-block" size="medium"></spinner>
+      </div>
       <template v-for="(girl , index) in girls">
           <girl :girl="girl" :index="index" @select="openMember"></girl>
           <div v-if="index % 2 == 1" class="clearfix"></div>
@@ -43,12 +46,14 @@ import {
   mapActions
 } from 'vuex'
 import ApiUrl from '@/config/ApiUrl'
+import Spinner from 'vue-simple-spinner'
 
 export default {
   name: "girls",
   data: () => ({
     openMemberModel: false,
-    selectGirl: null
+    selectGirl: null,
+    loading: false,
   }),
   watch: {
     // 如果路由有变化，会再次执行该方法
@@ -70,13 +75,18 @@ export default {
     },
     getJS() {
       const body = {}
+      this.loading = true
       this.$http.get(ApiUrl.getVote, {
         emulateJSON: true
       }).then(response => {
         this.setDefaultGirls(response.body)
         this.fetchData()
+        this.loading = false
+
       }, response => {
         // this.scheduleLoading = false
+        this.loading = false
+
       })
     },
     orderBySeq() {
@@ -136,7 +146,8 @@ export default {
   components: {
     Girl,
     ScrollToMember,
-    MemberInfo
+    MemberInfo,
+    Spinner
   }
 }
 </script>
