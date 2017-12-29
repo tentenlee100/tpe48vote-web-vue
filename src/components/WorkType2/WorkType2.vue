@@ -24,7 +24,7 @@
 <script>
 import WorkType2Cell from './WorkType2Cell'
 import ScrollToMember from '../ScrollToMember'
-import MemberInfo from '../MemberInfo'
+import MemberInfo from '../personal/MemberInfo'
 
 import { mapGetters, mapActions } from 'vuex'
 import ApiUrl from '@/config/ApiUrl'

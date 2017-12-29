@@ -43,9 +43,9 @@
               <div v-if="loading" class="text-center">
                 <spinner class="spinner inline-block" size="small"></spinner>
               </div>
-              <div v-if="girlInfo.sns && girlInfo.sns.length > 0" class="row">
+              <div v-if="snsArray && snsArray.length > 0" class="row">
                 <h3>社群連結:</h3>
-                <template v-for="sns in girlInfo.sns">
+                <template v-for="sns in snsArray">
                   <sns-cell :sns="sns" ></sns-cell>
                 </template>
               </div>
@@ -54,8 +54,18 @@
           <div class="col-xs-12">
             <a :href="url" target="_blank" class="vote-btn btn btn-warning btn-block pull-right" type="button" name="button">我要投票</a>
           </div>
-          <!-- 功課一覽 -->
+          <!-- live一覽 -->
+          <div class="col-xs-12">
 
+          <template v-if="livemeData && livemeData.length > 0" >
+            <h3>Live me 直播紀錄:</h3>
+            <template v-for="data in livemeData">
+              <live-me-cell :data="data" ></live-me-cell>
+            </template>
+          </template>
+        </div>
+
+          <!-- 功課一覽 -->
           <div v-if="girlInfo.workHistory && girlInfo.workHistory.length > 0" class="col-xs-12">
             <h3>功課一覽:</h3>
             <div class="row">
@@ -88,21 +98,24 @@ import {
 import Spinner from 'vue-simple-spinner'
 import ApiUrl from '@/config/ApiUrl'
 import SnsCell from './SnsCell'
-import WorkType2Cell from './WorkType2/WorkType2Cell'
-import WorkType1Cell from './WorkType1/WorkType1Cell'
+import LiveMeCell from './LiveMeCell'
+
+import WorkType2Cell from '../WorkType2/WorkType2Cell'
+import WorkType1Cell from '../WorkType1/WorkType1Cell'
 
 export default {
   name: "member-info",
   props: ["value", "girl"],
   data: () => ({
     detailData: {},
+    livemeData: [],
     loading: false
   }),
   methods: {
     modalHide() {
       this.$emit('input', false)
       this.detailData = {}
-
+      this.livemeData = []
     },
     modalShow() {
       this.callApi()
@@ -115,14 +128,51 @@ export default {
       this.$http.post(ApiUrl.memberDetail, body).then(response => {
         this.detailData = response.body
         this.loading = false
-
+        this.callLivemeApi()
       }, response => {
         this.loading = false
+
+      })
+    },
+    callLivemeApi() {
+
+      const liveme = this.girlInfo.sns.filter((obj)=>{ return obj.typeName == 'liveme' })
+
+      if (liveme.length == 0){ return }
+
+      const body = {
+        uid: liveme[0].snsId
+      }
+      // this.loading = true
+      this.$http.post(ApiUrl.liveMeHistory, body).then(response => {
+        this.livemeData = response.body
+        // this.loading = false
+
+      }, response => {
+        // this.loading = false
 
       })
     }
   },
   computed: {
+    showLiveme: function(){
+      if(this.detailData.length === 0){
+        return false
+      }
+      for (var index in this.detailData.sns) {
+        if (this.detailData.sns[index].typeName === 'liveme') {
+          return true
+        }
+      }
+      return false
+
+    },
+    snsArray: function(){
+      if (!this.girlInfo.sns){
+        return []
+      }
+      return this.girlInfo.sns.filter((obj)=>{ return obj.typeName != 'liveme' })
+    },
     girlInfo: function() {
       if (this.detailData.length === 0) {
         return this.girl
@@ -153,7 +203,8 @@ export default {
     Spinner,
     SnsCell,
     WorkType2Cell,
-    WorkType1Cell
+    WorkType1Cell,
+    LiveMeCell
   }
 }
 </script>

@@ -5,6 +5,7 @@ const ApiUrl = (process.env.NODE_ENV === 'production') ?
   getVote: "./api/getVote",
   getWorkDetail: "./api/getWorkDetail",
   memberDetail: "./api/memberDetail",
+  liveMeHistory: "./api/liveMeHistory",
 
 
 
@@ -16,7 +17,7 @@ const ApiUrl = (process.env.NODE_ENV === 'production') ?
   getVote: "http://localhost:7171/tpe48vote/api/getVote",
   getWorkDetail: "http://localhost:7171/tpe48vote/api/getWorkDetail",
   memberDetail: "http://localhost:7171/tpe48vote/api/memberDetail",
-
+  liveMeHistory: "http://localhost:7171/tpe48vote/api/liveMeHistory",
 
 }
 

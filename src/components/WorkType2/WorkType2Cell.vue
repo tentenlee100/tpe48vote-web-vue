@@ -10,7 +10,7 @@
     <div v-if="youtubeId.length > 0" class="row">
       <div class="col-xs-12">
         <div class="row">
-          <div class="embed-responsive embed-responsive-16by9">
+          <div class= "display-block embed-responsive embed-responsive-16by9">
             <template v-if="play">
               <div class="youtube">
                 <div class="play"  v-on:click="play = false">
@@ -189,5 +189,9 @@ export default {
 .title-alert-info .alert-info h3 {
   margin-top: 0px;
   margin-bottom: 0px;
+}
+.display-block{
+  margin-left: 5px;
+  margin-right: 5px;
 }
 </style>

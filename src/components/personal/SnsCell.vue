@@ -19,11 +19,11 @@ export default {
     logo: function(){
       if (this.sns.typeName == 'facebook'){
         // return "asset/facebook.png"
-        return require("../assets/facebook.png")
+        return require("../../assets/facebook.png")
       }else if (this.sns.typeName == 'instagram'){
-        return require("../assets/instagram.png")
+        return require("../../assets/instagram.png")
       }else if (this.sns.typeName == 'twitter'){
-        return require("../assets/twitter.png")
+        return require("../../assets/twitter.png")
       }else{
         return null
       }
