@@ -1,16 +1,20 @@
 <template>
   <div>
     <div class="col-xs-12">
-      <a :href="data.watchUrl" target="_blank">
-        <div class="title">
-          <h4>{{data.vtimeString}}</h4>
-          <h4>{{data.title}}</h4>
-        </div>
-        <h4 class="pull-right icon">
-        <i class="fa fa-external-link " aria-hidden="true"></i>
-        </h4>
-      </a>
-      <hr/>
+      <div class="row">
+        <a :href="data.watchUrl" target="_blank">
+            <div class="title">
+              <h4>{{data.vtimeString}}</h4>
+              <h4>{{data.title}}</h4>
+            </div>
+            <div class="pull-right">
+              <h3 class="icon">
+                <i class="fa fa-external-link " aria-hidden="true"></i>
+              </h3>
+            </div>
+        </a>
+        <hr/>
+      </div>
     </div>
 
   </div>
@@ -26,16 +30,28 @@ export default {
 </script>
 <style scoped>
 .col-xs-12{
-  display: inline-block;
+  /* display: inline-block; */
   cursor:pointer;
 }
 .title{
   display: inline-block;
 }
-
+a{
+  display : block;
+  overflow: hidden;
+}
+.pull-right{
+  height: 100%;
+}
 .icon{
-  display: inline-block;
+  margin: 0;
+  height: 100%;
+  right: 5px;
+  display: inline;
   vertical-align: middle;
-  line-height: normal;
+  align-items: center;
+}
+i{
+
 }
 </style>
